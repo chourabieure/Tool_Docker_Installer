@@ -1,0 +1,24 @@
+version: '3'
+services:
+  nginx:
+    container_name: nginx
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/nginx.conf
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+    restart: always
+    networks:
+      - network
+
+volumes:
+  nginx_certs:
+
+networks:
+  network:
+    name: back-network
+    external: true
+  
